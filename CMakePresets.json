@@ -1,0 +1,46 @@
+{
+  "version": 10,
+  "configurePresets": [
+    {
+      "hidden": true,
+      "name": "pico",
+      "displayName": "Configure (debug)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/_build/pico",
+      "cacheVariables": {
+        "PICO_BOARD": "pico",
+        "PICO_PLATFORM": "rp2040",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      },
+      "environment": {
+        "PICO_SDK_PATH": "${sourceDir}/_build/ext/pico-sdk"
+      }
+    },
+    {
+      "name": "pico-debug",
+      "inherits": "pico",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "pico-release",
+      "inherits": "pico",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "release"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "pico-debug",
+      "displayName": "Build (Debug)",
+      "configurePreset": "pico-debug"
+    },
+    {
+      "name": "pico-release",
+      "displayName": "Build (Release)",
+      "configurePreset": "pico-release"
+    }
+  ]
+}

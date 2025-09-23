@@ -1,0 +1,39 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "editor.renderWhitespace": "boundary",
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "clangd.arguments": [
+      "--compile-commands-dir=${workspaceFolder}/_build/pico",
+      "--query-driver=/usr/bin/arm-none-eabi-*",
+      "--header-insertion=never"
+    ],
+    "cmake.sourceDirectory": "${workspaceFolder}",
+    "cmake.useCMakePresets": "always",
+    "cmake.copyCompileCommands": "${workspaceFolder}/_build/pico/compile_commands.json",
+    "[cpp][c]": {
+      "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+      "editor.inlayHints.enabled": "off"
+    },
+    "[json][jsonc]": {
+      "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[yaml]": {
+      "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+  },
+  "extensions": {
+    "recommendations": [
+      "marus25.cortex-debug",
+      "llvm-vs-code-extensions.vscode-clangd",
+      "ms-vscode.cmake-tools",
+      "redhat.vscode-yaml",
+      "twxs.cmake"
+    ]
+  }
+}

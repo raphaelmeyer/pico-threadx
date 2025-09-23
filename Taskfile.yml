@@ -1,0 +1,33 @@
+version: "3"
+
+env:
+  PICO_SDK_PATH: '{{ joinPath .ROOT_DIR "_build/ext/pico-sdk" }}'
+
+tasks:
+  build:
+    desc: Build
+    cmds:
+      - cmake --build --preset "pico-debug" --target all
+    deps:
+      - configure
+
+  configure:
+    internal: true
+    cmds:
+      - cmake --preset "pico-debug"
+    deps:
+      - pico-sdk
+    status:
+      - test -d {{ joinPath .ROOT_DIR "_build/pico" }}
+      - test -f {{ joinPath .ROOT_DIR "_build/pico/CMakeCache.txt" }}
+      - test -f {{ joinPath .ROOT_DIR "_build/pico/build.ninja" }}
+
+  pico-sdk:
+    desc: Download and install the Pico SDK
+    cmds:
+      - git clone https://github.com/raspberrypi/pico-sdk.git _build/ext/pico-sdk
+      - cd _build/ext/pico-sdk && git switch -c raphaelmeyer/2.2.0 2.2.0
+      - cd _build/ext/pico-sdk && git submodule update --init
+    status:
+      - test -d _build/ext/pico-sdk
+      - test -f _build/ext/pico-sdk/CMakeLists.txt
