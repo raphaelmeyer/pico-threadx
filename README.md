@@ -9,8 +9,15 @@ The purpose of this example is to support the development of the VS Code
 [RTOS Views] plugin. The plugin is part of the [Cortex-Debug] plugin, but is
 still missing support for ThreadX.
 
+## Getting Started
+
+Use the `build` task from the [Taskfile] for the initial setup.
+
+    task build
+
 [Pico]: https://www.raspberrypi.com/products/raspberry-pi-pico/
 [ThreadX]: https://threadx.io/
 [debugprobe]: https://github.com/raspberrypi/debugprobe/
 [Cortex-Debug]: https://marketplace.visualstudio.com/items?itemName=marus25.cortex-debug
 [RTOS Views]: https://marketplace.visualstudio.com/items?itemName=mcu-debug.rtos-views
+[Taskfile]: https://taskfile.dev/
