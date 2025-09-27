@@ -17,6 +17,11 @@ TX_THREAD summoner;
 TX_THREAD summon;
 TX_SEMAPHORE spirit;
 
+TX_THREAD socrates;
+TX_THREAD aristotle;
+TX_THREAD plato;
+TX_MUTEX spaghetti_fork;
+
 uint8_t byte_pool_buffer[8192];
 
 int main() {
@@ -83,6 +88,14 @@ static void summoner_main(uint32_t input) {
   }
 }
 
+void philosopher_main(uint32_t eating_time) {
+  for (;;) {
+    tx_mutex_get(&spaghetti_fork, TX_WAIT_FOREVER);
+    tx_thread_sleep(eating_time);
+    tx_mutex_put(&spaghetti_fork);
+  }
+}
+
 void tx_application_define(void *first_unused_memory) {
   tx_byte_pool_create(&byte_pool, "Byte Pool", byte_pool_buffer,
                       sizeof(byte_pool_buffer));
@@ -104,5 +117,19 @@ void tx_application_define(void *first_unused_memory) {
 
   tx_byte_allocate(&byte_pool, (void **)&stack_start, 512, TX_NO_WAIT);
   tx_thread_create(&summoner, "Summoner", summoner_main, 0, stack_start, 512, 7,
+                   1, TX_NO_TIME_SLICE, TX_AUTO_START);
+
+  tx_mutex_create(&spaghetti_fork, "Spaghetti Fork", TX_NO_INHERIT);
+
+  tx_byte_allocate(&byte_pool, (void **)&stack_start, 512, TX_NO_WAIT);
+  tx_thread_create(&socrates, "Socrates", philosopher_main, 23, stack_start,
+                   512, 9, 1, TX_NO_TIME_SLICE, TX_AUTO_START);
+
+  tx_byte_allocate(&byte_pool, (void **)&stack_start, 512, TX_NO_WAIT);
+  tx_thread_create(&aristotle, "Aristotle", philosopher_main, 42, stack_start,
+                   512, 9, 1, TX_NO_TIME_SLICE, TX_AUTO_START);
+
+  tx_byte_allocate(&byte_pool, (void **)&stack_start, 512, TX_NO_WAIT);
+  tx_thread_create(&plato, "Plato", philosopher_main, 77, stack_start, 512, 9,
                    1, TX_NO_TIME_SLICE, TX_AUTO_START);
 }
