@@ -26,7 +26,7 @@ tasks:
     desc: Download and install the Pico SDK
     cmds:
       - git clone https://github.com/raspberrypi/pico-sdk.git _build/ext/pico-sdk
-      - cd _build/ext/pico-sdk && git switch -c raphaelmeyer/2.2.0 2.2.0
+      - cd _build/ext/pico-sdk && git switch -c pico-sdk-release/2.2.0 2.2.0
       - cd _build/ext/pico-sdk && git submodule update --init
     status:
       - test -d _build/ext/pico-sdk
